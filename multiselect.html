@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test multiselect</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<script src="https://kit.fontawesome.com/449d33d172.js" crossorigin="anonymous"></script>
+</head>
+<body>
+	<div id="optSelected"></div>
+	<select multiple="multiple" class="form-control" id="myselect" onclick="optionselected(this)">
+		<option>test1</option>
+		<option>test2</option>
+		<option>test3</option>
+		<option>test4</option>
+		<option>test5</option>
+	</select>
+
+<script type="text/javascript">
+	function optionselected(select){
+		let optionselect = this;
+		let option = []
+		var options = select && select.options;
+  		var opt;
+  		
+		
+		
+		for (var i=0, iLen=options.length; i<iLen; i++) {
+    		opt = options[i];
+
+    		if (opt.selected) {
+      			option.push(opt.value || opt.text);
+    		}
+  		}
+
+  		console.log(option);
+  		displayOption(option);
+		
+	}
+
+	function displayOption(array){
+
+		let addOption = document.getElementById("optSelected");
+		if(addOption.children.length > 0){
+			addOption.innerHTML = "";
+		}
+  		
+		for(let i=0; i < array.length; i++){
+			let spanOption = document.createElement("span");
+			let spanDelete = document.createElement("span");
+			let spanI = document.createElement("i");
+			spanOption.classList.add("badge");
+			spanOption.classList.add("badge-secondary");
+			spanOption.classList.add("ml-1");
+			spanI.classList.add("fas");
+			spanI.classList.add("fa-times");
+			spanI.classList.add("ml-1");
+			spanI.style.cursor = "pointer";
+			spanI.onclick = function() { removeOption(this); };
+
+			console.log(array[i])
+			spanOption.innerHTML = array[i];
+			spanOption.appendChild(spanI);
+			addOption.appendChild(spanOption);
+		}
+	}
+
+	function removeOption(span){
+		let displaySpan = document.getElementById("optSelected");
+		let spanClicked = span.parentNode;
+		let select = document.getElementById("myselect");
+		let options = select && select.options;
+		let optionSelected;
+
+		for (var i=0, iLen=options.length; i<iLen; i++) {
+    		opt = options[i];
+
+    		if (opt.value == spanClicked.innerText) {
+      			options[i].selected = false;
+    		}
+  		}
+
+  		displaySpan.removeChild(spanClicked);
+		
+	}
+
+
+</script>
+</body>
+</html>
